@@ -15,6 +15,23 @@ export type OptionType = {
 	optionClassName?: string;
 };
 
+export type ParamsType = {
+	fontFamilyOption: OptionType;
+	fontSizeOption: OptionType;
+	fontColor: OptionType;
+	backgroundColor: OptionType;
+	contentWidth: OptionType;
+};
+
+export interface IChangeProp {
+	onChange: (value: ParamsType) => void;
+}
+
+export interface IClickProp {
+	onClick(value: boolean): void;
+	isOpen?: boolean;
+}
+
 export const fontFamilyOptions: OptionType[] & {
 	optionClassName?: FontFamiliesClasses;
 } = [
