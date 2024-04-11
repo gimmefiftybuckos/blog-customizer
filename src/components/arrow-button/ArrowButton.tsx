@@ -7,12 +7,9 @@ import clsx from 'clsx';
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
 
-export const ArrowButton = ({
-	setOpenStatus: setState,
-	isOpen,
-}: IClickProp) => {
+export const ArrowButton = ({ setOpenStatus, isOpen }: IClickProp) => {
 	const openingHandler = () => {
-		isOpen ? setState(false) : setState(true);
+		isOpen ? setOpenStatus(false) : setOpenStatus(true);
 	};
 
 	return (

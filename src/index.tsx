@@ -16,9 +16,11 @@ const root = createRoot(domNode);
 const App = () => {
 	const userStorage = useLocalStorage('themeState');
 
-	const [state, setState] = useState(userStorage || defaultArticleState);
+	const [userThemeState, setUserThemeState] = useState(
+		userStorage || defaultArticleState
+	);
 
-	const param = state as ParamsType;
+	const param = userThemeState as ParamsType;
 
 	const [isOpen, setOpenStatus] = useState(false);
 
@@ -35,7 +37,7 @@ const App = () => {
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
-				transferData={setState}
+				transferData={setUserThemeState}
 				setOpenStatus={setOpenStatus}
 				isOpen={isOpen}
 			/>
