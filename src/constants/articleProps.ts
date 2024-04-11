@@ -23,12 +23,12 @@ export type ParamsType = {
 	contentWidth: OptionType;
 };
 
-export interface IChangeProp {
-	onChange: (value: ParamsType) => void;
+export interface IChangeProp extends IClickProp {
+	transferData(value: ParamsType): void;
 }
 
 export interface IClickProp {
-	onClick(value: boolean): void;
+	setOpenStatus(value: boolean): void;
 	isOpen?: boolean;
 }
 

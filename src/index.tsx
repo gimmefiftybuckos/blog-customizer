@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { StrictMode, CSSProperties, useState, useEffect } from 'react';
+import { StrictMode, CSSProperties, useState } from 'react';
 import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
@@ -18,23 +18,29 @@ const App = () => {
 
 	const [state, setState] = useState(userStorage || defaultArticleState);
 
-	const params = state as ParamsType;
+	const param = state as ParamsType;
+
+	const [isOpen, setOpenStatus] = useState(false);
 
 	return (
-		<div
+		<main
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': params.fontFamilyOption.value,
-					'--font-size': params.fontSizeOption.value,
-					'--font-color': params.fontColor.value,
-					'--container-width': params.contentWidth.value,
-					'--bg-color': params.backgroundColor.value,
+					'--font-family': param.fontFamilyOption.value,
+					'--font-size': param.fontSizeOption.value,
+					'--font-color': param.fontColor.value,
+					'--container-width': param.contentWidth.value,
+					'--bg-color': param.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm onChange={setState} />
-			<Article />
-		</div>
+			<ArticleParamsForm
+				transferData={setState}
+				setOpenStatus={setOpenStatus}
+				isOpen={isOpen}
+			/>
+			<Article setOpenStatus={setOpenStatus} />
+		</main>
 	);
 };
 

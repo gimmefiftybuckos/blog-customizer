@@ -1,23 +1,16 @@
 import arrow from 'src/images/arrow.svg';
 
 import styles from './ArrowButton.module.scss';
-import { useEffect, useState } from 'react';
 import { IClickProp } from 'src/constants/articleProps';
+import clsx from 'clsx';
 
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
 
-export const ArrowButton = ({ onClick: setState, isOpen }: IClickProp) => {
-	// const [isOpen, changeStatus] = useState(false);
-
-	let arrowOpenClass = '';
-	let containerOpenClass = '';
-
-	if (isOpen) {
-		arrowOpenClass = styles.arrow_open;
-		containerOpenClass = styles.container_open;
-	}
-
+export const ArrowButton = ({
+	setOpenStatus: setState,
+	isOpen,
+}: IClickProp) => {
 	const openingHandler = () => {
 		isOpen ? setState(false) : setState(true);
 	};
@@ -28,13 +21,14 @@ export const ArrowButton = ({ onClick: setState, isOpen }: IClickProp) => {
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
-			className={`${styles.container} 
-			${containerOpenClass}`}
+			className={clsx(styles.container, {
+				[styles.container_open]: isOpen,
+			})}
 			onClick={openingHandler}>
 			<img
 				src={arrow}
 				alt='иконка стрелочки'
-				className={`${styles.arrow} ${arrowOpenClass}`}
+				className={clsx(styles.arrow, { [styles.arrow_open]: isOpen })}
 			/>
 		</div>
 	);

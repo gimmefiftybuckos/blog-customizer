@@ -17,26 +17,31 @@ import { Separator } from '../separator';
 import { useState } from 'react';
 import { useLocalStorage } from 'src/hooks/useLocalStorage';
 import { Text } from '../text';
+import clsx from 'clsx';
 
-export const ArticleParamsForm = ({ onChange: setState }: IChangeProp) => {
+export const ArticleParamsForm = ({
+	transferData,
+	setOpenStatus,
+	isOpen,
+}: IChangeProp) => {
 	const userStorage = useLocalStorage('themeState');
 
-	const params = userStorage || (defaultArticleState as ParamsType);
+	const param = userStorage || (defaultArticleState as ParamsType);
 
 	const [fontFamilyState, setFontFamilyState] = useState(
-		params.fontFamilyOption
+		param.fontFamilyOption
 	);
 
-	const [fontSizeState, setFontSizeState] = useState(params.fontSizeOption);
+	const [fontSizeState, setFontSizeState] = useState(param.fontSizeOption);
 
-	const [fontColorState, setFontColorState] = useState(params.fontColor);
+	const [fontColorState, setFontColorState] = useState(param.fontColor);
 
 	const [backgroundColorState, setBackgroundColorState] = useState(
-		params.backgroundColor
+		param.backgroundColor
 	);
 
 	const [contentWidthState, setcontentWidthState] = useState(
-		params.contentWidth
+		param.contentWidth
 	);
 
 	const state = {
@@ -48,7 +53,7 @@ export const ArticleParamsForm = ({ onChange: setState }: IChangeProp) => {
 	};
 
 	const submitHandler = (event: React.FormEvent<EventTarget>) => {
-		setState(state);
+		transferData(state);
 
 		localStorage.setItem('themeState', JSON.stringify(state));
 
@@ -63,22 +68,11 @@ export const ArticleParamsForm = ({ onChange: setState }: IChangeProp) => {
 		setcontentWidthState(defaultArticleState.contentWidth);
 	};
 
-	const [isOpen, setStatus] = useState(false);
-
-	let containerOpenClass = '';
-
-	if (isOpen) {
-		containerOpenClass = styles.container_open;
-	}
-
 	return (
 		<>
-			<ArrowButton onClick={setStatus} isOpen={isOpen} />
+			<ArrowButton setOpenStatus={setOpenStatus} isOpen={isOpen} />
 			<aside
-				className={`
-			${styles.container} 
-			${containerOpenClass}
-			`}>
+				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
 				<form onSubmit={submitHandler} className={styles.form}>
 					<Text size={31} weight={800} uppercase align='left'>
 						Задайте параметры
